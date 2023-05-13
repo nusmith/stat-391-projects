@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Define densities
 def f(x):
@@ -27,8 +28,12 @@ def K(x):
     s = 1
     # kernel width will be 5 units
     x_range = np.arange(mu - 5, mu + 5, 0.01)
-    return 1/(np.sqrt(2*np.pi)*s) * np.e**(-x_range**2/(2 * s**2))
+    x_range_norm = [(i - mu)/s for i in x_range]
+    return [float(1/(np.sqrt(2*np.pi)*s)) * (np.e**((-1/2)*(x_i)**2)) for x_i in x_range_norm]
 
+# print(K(4))
+# plt.plot(np.arange(4 - 5, 4 + 5, 0.01), K(4))
+# plt.show()
 # Mixture (of gaussians) density
 def fh(x, k, h):
     n = len(f_train)
