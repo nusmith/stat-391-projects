@@ -22,14 +22,10 @@ f_train_nums = pd.read_csv('hw5-f-train.dat', header=None)
 f_valid_nums = pd.read_csv('hw5-f-valid.dat', header=None)
 f_train = [float(i) for i in (f_train_nums.values[0])[0].split(" ")]
 f_valid = (f_valid_nums.values[0])[0].split(" ")
-# Gaussian Kernel centered at x
+
+# Gaussian Kernel N(0,1)
 def K(x):
-    mu = x
-    s = 1
-    # kernel width will be 5 units
-    x_range = np.arange(mu - 5, mu + 5, 0.01)
-    x_range_norm = [(i - mu)/s for i in x_range]
-    return [float(1/(np.sqrt(2*np.pi)*s)) * (np.e**((-1/2)*(x_i)**2)) for x_i in x_range_norm]
+    return float(1/(np.sqrt(2*np.pi))) * (np.e ** ((-1/2) * x ** 2))
 
 # print(K(4))
 # plt.plot(np.arange(4 - 5, 4 + 5, 0.01), K(4))
@@ -37,10 +33,11 @@ def K(x):
 # Mixture (of gaussians) density
 def fh(x, k, h):
     n = len(f_train)
-    return (1/(n*h)) * sum([k(-1*(sample - x)/h) for sample in f_train])
-
-
-print(fh(4, K, 0.01))
+    k_sum = 0
+    for t in f_train:
+        k_sum += k((x - t) / h)
+    # normalize
+    return (1 / (n * h)) * k_sum
 
 
 # possible values for h
