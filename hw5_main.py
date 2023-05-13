@@ -42,19 +42,23 @@ def fh(x, k, h):
 
 # possible values for h
 h_range = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
-
 # Likelihood of the data (training) under fh
-L_series_train = np.ones(len(h_range))
-# for i in range(1, len(h_range) + 1):
-#     h = h_range[i]
-#     for d in f_train:
-#         break
-#         L_series_train[i] = L_series_train[i] * fh()
-
+Lh_series_train = np.ones(len(h_range))
+for i in range(len(h_range)):
+    h = h_range[i]
+    # Find likelihood of data for all values of h
+    for d in f_train:
+        Lh_series_train[i] = Lh_series_train[i] * fh(d, K, h)
+print(Lh_series_train)
 
 # Likelihood of the data (test) under fh
-L_series_test = np.ones(len(h_range))
-
+Lh_series_test = np.ones(len(h_range))
+for i in range(len(h_range)):
+    h = h_range[i]
+    # Find likelihood of data for all values of h
+    for d in f_train:
+        Lh_series_test[i] = Lh_series_test[i] * fh(d, K, h)
+print(Lh_series_test)
 
 
 
