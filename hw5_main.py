@@ -35,7 +35,7 @@ print("range f:" + str([min(f_train), max(f_train)]))
 
 # Gaussian Kernel N(0,1)
 def k_gauss(x):
-    return norm.pdf(x)
+    return 1/np.sqrt(2*np.pi) * np.exp(-1/2 * x**2)
 
 # Mixture (of gaussians) density
 def fh(x, k, h, D):
@@ -49,11 +49,11 @@ def fh(x, k, h, D):
 
 print(fh(f_train[0], k_gauss, 0.001, f_train))
 x_d = np.arange(0, 1, 0.001)
-#dens = [fh(xstep, k_gauss, 0.1, f_train) for xstep in x_d]
+dens = [fh(xstep, k_gauss, 0.1, f_train) for xstep in x_d]
 #print(dens)
 # visualize the kernels
-#plt.plot(x_d, dens, label = "Gaussian")
-#plt.show()
+plt.plot(x_d, dens, label = "Gaussian")
+plt.show()
 
 lh = 0
 i = 1
