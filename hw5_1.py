@@ -55,9 +55,7 @@ def fh(x, k, h, D):
 # Estimation of density of f via KDE
 # possible values for h
 h_range = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.5]
-# Likelihood of the train data under fh
-lh_series_train = np.ones(len(h_range))
-# Find likelihood of data for all values of h
+# KDE for training data
 fh_train = [[fh(x, k_gauss, h0, f_train) for x in f_train] for h0 in h_range]
 # Visualize the KDEs
 plt.plot(f_train, fh_train[0], label="h= 0.001")
@@ -74,7 +72,7 @@ plt.xlabel("x")
 plt.ylabel("fh(x)")
 plt.show()
 
-# Likelihood of the validation under fh
+# KDE for validation data
 fh_valid = [[fh(x, k_gauss, h0, f_train) for x in f_valid] for h0 in h_range]
 # Visualize the KDEs
 plt.plot(f_valid, fh_valid[0], label="h= 0.001")
@@ -91,11 +89,11 @@ plt.xlabel("x")
 plt.ylabel("fh(x)")
 plt.show()
 # Use for Cross-Validation to find h*
-# Likelihood of the train data under fh-- find likelihood of data for all values of h
+# Log-likelihood of the train data under fh-- find log-likelihood of data for all values of h
 lh_series_train = [sum(np.log10(d) for d in row) for row in fh_train]
 lh_series_valid = [sum(np.log10(d) for d in row) for row in fh_valid]
 h_star_f = h_range[lh_series_valid.index(max(lh_series_valid))]
-# Plot likelihood
+# Plot log-likelihood
 plt.plot(h_range, lh_series_train, label="Training Data")
 plt.plot(h_range, lh_series_valid, label="Validation Data")
 plt.legend()
@@ -119,9 +117,7 @@ plt.show()
 # Estimation of density of g via KDE
 # possible values for h
 h_range = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.5]
-# Likelihood of the train data under fh
-lh_series_train = np.ones(len(h_range))
-# Find likelihood of data for all values of h
+# KDE for training data
 gh_train = [[fh(x, k_gauss, h0, g_train) for x in g_train] for h0 in h_range]
 # Visualize the KDEs
 plt.plot(g_train, gh_train[0], label="h= 0.001")
@@ -138,7 +134,7 @@ plt.xlabel("x")
 plt.ylabel("gh(x)")
 plt.show()
 
-# Likelihood of the validation under fh
+# KDE of validation data
 gh_valid = [[fh(x, k_gauss, h0, g_train) for x in g_valid] for h0 in h_range]
 # Visualize the KDEs
 plt.plot(g_valid, gh_valid[0], label="h= 0.001")

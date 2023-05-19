@@ -41,7 +41,7 @@ g_valid.sort()
 def k_ep(x):
     return 0.75 * (1-x**2)
 
-
+print(k_ep(f_train[0]))
 # Mixture (of epanechnikovs) density
 def fh(x, k, h, D):
     n = len(D)
@@ -56,9 +56,7 @@ def fh(x, k, h, D):
 # Estimation of density of f via KDE
 # possible values for h
 h_range = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.5]
-# Likelihood of the train data under fh
-lh_series_train = np.ones(len(h_range))
-# Find likelihood of data for all values of h
+# KDE for training data
 fh_train = [[fh(x, k_ep, h0, f_train) for x in f_train] for h0 in h_range]
 # Visualize the KDEs
 plt.plot(f_train, fh_train[0], label="h= 0.001")
@@ -75,7 +73,7 @@ plt.xlabel("x")
 plt.ylabel("fh(x)")
 plt.show()
 
-# Likelihood of the validation under fh
+# KDE for validation data
 fh_valid = [[fh(x, k_ep, h0, f_train) for x in f_valid] for h0 in h_range]
 # Visualize the KDEs
 plt.plot(f_valid, fh_valid[0], label="h= 0.001")
@@ -120,9 +118,7 @@ plt.show()
 # Estimation of density of g via KDE
 # possible values for h
 h_range = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.5]
-# Likelihood of the train data under fh
-lh_series_train = np.ones(len(h_range))
-# Find likelihood of data for all values of h
+# KDE for training data
 gh_train = [[fh(x, k_ep, h0, g_train) for x in g_train] for h0 in h_range]
 # Visualize the KDEs
 plt.plot(g_train, gh_train[0], label="h= 0.001")
@@ -139,7 +135,7 @@ plt.xlabel("x")
 plt.ylabel("gh(x)")
 plt.show()
 
-# Likelihood of the validation under fh
+# KDE for validation data
 gh_valid = [[fh(x, k_ep, h0, g_train) for x in g_valid] for h0 in h_range]
 # Visualize the KDEs
 plt.plot(g_valid, gh_valid[0], label="h= 0.001")
