@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 # EXTRA CREDIT PROBLEM: Same as Prob 2. but with Epanechnikov kernel
 # Define densities
 def f(x):
@@ -38,18 +39,25 @@ g_valid.sort()
 
 
 # Epanechnikov Kernel N(0,1)
-def k_ep(x):
-    return 0.75 * (1-x**2)
+def inRange(x, h):
+    if np.abs(x) < h:
+        return 1
+    else:
+        return 0
 
-print(k_ep(f_train[0]))
+def k_ep(x, h):
+    return 0.75 * (1 - x ** 2) * inRange(x,h)
+
+
 # Mixture (of epanechnikovs) density
 def fh(x, k, h, D):
     n = len(D)
     k_sum = 0
     for sample in D:
-        k_sum += k((x - sample) / h)
+        k_sum += k((x - sample), h)
     # normalize
     return (1 / (n * h)) * k_sum
+
 
 # ---------------------------------------------------------------------------------------
 # PART (a)
@@ -111,7 +119,6 @@ plt.title(label="Compare KDE estimate w/ h* and true density f(x)")
 plt.xlabel("x")
 plt.ylabel("f(x)")
 plt.show()
-
 
 # PART(b)
 # ---------------------------------------------------------------------------------------
@@ -177,4 +184,3 @@ plt.show()
 # PART (c)
 # See below that h_star_f = 0.01 and h_star_g = 0.02
 print("h*_f = " + str(h_star_f), "h*_g = " + str(h_star_g))
-
