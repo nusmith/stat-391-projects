@@ -111,7 +111,7 @@ plt.xlabel("h")
 plt.ylabel("l^CV")
 plt.show()
 # Compare fh* to true density
-x_range = np.arange(-0.5, 1.5, 0.1)
+x_range = np.arange(-0.5, 1.5, 0.01)
 plt.plot(x_range, [f(x) for x in x_range], label="f(x) true")
 plt.plot(x_range, [fh(x, k_ep, h_star_f, f_train) for x in x_range], label="fh*(x)")
 plt.legend()
